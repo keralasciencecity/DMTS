@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kerala Science City | Document Management & Tracking System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- App Container -->
+    <div class="app-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                    <div class="logo-text">
+                        <h1>KSC</h1>
+                        <span>Science City Portal</span>
+                    </div>
+                </div>
+                <button class="close-sidebar-btn" id="closeSidebarBtn" aria-label="Close sidebar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-tab="dashboard">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="9"></rect>
+                        <rect x="14" y="3" width="7" height="5"></rect>
+                        <rect x="14" y="12" width="7" height="9"></rect>
+                        <rect x="3" y="16" width="7" height="5"></rect>
+                    </svg>
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-item" data-tab="submissions">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <span>Submissions</span>
+                </button>
+                <button class="nav-item" data-tab="orders">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                        <path d="M9 14h6"></path>
+                        <path d="M9 18h6"></path>
+                        <path d="M12 10h.01"></path>
+                    </svg>
+                    <span>Office Orders</span>
+                </button>
+                <button class="nav-item" data-tab="tracker">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        <path d="M11 8v6l3 2"></path>
+                    </svg>
+                    <span>Track Document</span>
+                </button>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="theme-toggle-container">
+                    <span>Dark Theme</span>
+                    <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle visual theme">
+                        <span class="theme-toggle-slider"></span>
+                    </button>
+                </div>
+                <div class="developer-credit">
+                    <span>Kerala Science City</span>
+                    <small>Document System v1.0</small>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Top Navbar -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <button class="open-sidebar-btn" id="openSidebarBtn" aria-label="Open sidebar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    <div class="navbar-title">
+                        <h2 id="navbarTitleText">Dashboard Overview</h2>
+                        <span class="system-status" id="syncStatus">
+                            <span class="pulse-indicator"></span>
+                            Syncing data...
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="navbar-right">
+                    <!-- Global Google Form Buttons -->
+                    <a href="https://docs.google.com/spreadsheets/d/1z3pMERl1HH2KKIQJtIE2gRElpjQwPRQb5VSfct521Cc/edit" target="_blank" class="action-btn outline-btn" id="formSubmitBtn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        <span>Submissions Sheet</span>
+                    </a>
+                    <a href="https://docs.google.com/spreadsheets/d/1_yeOVxT5PWre9sxlXrAEsGLgSD4OLIpsTHAtevl1qzk/edit" target="_blank" class="action-btn primary-btn" id="formOrderBtn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        <span>Orders Sheet</span>
+                    </a>
+                </div>
+            </header>
+            
+            <!-- Error Banner -->
+            <div class="error-banner hidden" id="errorBanner">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <div class="error-content">
+                    <h4>Failed to connect to Google Sheets</h4>
+                    <p id="errorMessageText">The spreadsheets might be loading or offline. Working with local cached data instead.</p>
+                </div>
+                <button class="close-error-btn" id="closeErrorBtn">✕</button>
+            </div>
+            
+            <!-- Views Wrapper -->
+            <div class="view-content-wrapper">
+                
+                <!-- VIEW 1: DASHBOARD -->
+                <section class="tab-view active" id="dashboard-view">
+                    <!-- Key Stats Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card total-submissions">
+                            <div class="stat-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                </svg>
+                            </div>
+                            <div class="stat-details">
+                                <span class="stat-label">Total Submissions</span>
+                                <h3 class="stat-value" id="stat-total-submissions">-</h3>
+                                <span class="stat-trend" id="stat-sub-trend">Real-time sync</span>
+                            </div>
+                        </div>
+                        <div class="stat-card pending-submissions">
+                            <div class="stat-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                            </div>
+                            <div class="stat-details">
+                                <span class="stat-label">Pending Reviews</span>
+                                <h3 class="stat-value" id="stat-pending-submissions">-</h3>
+                                <span class="stat-trend pending-percentage" id="stat-pending-percentage">-</span>
+                            </div>
+                        </div>
+                        <div class="stat-card processed-orders">
+                            <div class="stat-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <div class="stat-details">
+                                <span class="stat-label">Approved & Completed</span>
+                                <h3 class="stat-value" id="stat-completed-submissions">-</h3>
+                                <span class="stat-trend completed-percentage" id="stat-completed-percentage">-</span>
+                            </div>
+                        </div>
+                        <div class="stat-card total-orders">
+                            <div class="stat-icon-wrapper">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </div>
+                            <div class="stat-details">
+                                <span class="stat-label">Total Office Orders</span>
+                                <h3 class="stat-value" id="stat-total-orders">-</h3>
+                                <span class="stat-trend" id="stat-orders-trend">Authorized issues</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dashboard Visualizations & Recent Feed Grid -->
+                    <div class="dashboard-grid">
+                        <!-- Chart Card 1: Category Distribution -->
+                        <div class="dashboard-card visual-card">
+                            <div class="card-header">
+                                <h3>Submissions by Category</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container" id="categoryChartContainer">
+                                    <div class="css-chart-loader">Loading visualizers...</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Chart Card 2: Status Breakdown -->
+                        <div class="dashboard-card visual-card">
+                            <div class="card-header">
+                                <h3>Status Breakdown</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container" id="statusChartContainer">
+                                    <div class="css-chart-loader">Loading visualizers...</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Submissions List -->
+                        <div class="dashboard-card feed-card">
+                            <div class="card-header">
+                                <h3>Recent Submissions</h3>
+                                <button class="view-all-link" data-go-to="submissions">View All</button>
+                            </div>
+                            <div class="card-body">
+                                <ul class="feed-list" id="recentSubmissionsList">
+                                    <li class="feed-placeholder">Loading recent submissions...</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Office Orders List -->
+                        <div class="dashboard-card feed-card">
+                            <div class="card-header">
+                                <h3>Recent Office Orders</h3>
+                                <button class="view-all-link" data-go-to="orders">View All</button>
+                            </div>
+                            <div class="card-body">
+                                <ul class="feed-list" id="recentOrdersList">
+                                    <li class="feed-placeholder">Loading recent office orders...</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- VIEW 2: SUBMISSIONS REGISTER -->
+                <section class="tab-view" id="submissions-view">
+                    <div class="table-controls-wrapper">
+                        <!-- Search & Primary Filters -->
+                        <div class="search-filters-bar">
+                            <div class="search-input-wrapper">
+                                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input type="text" id="subSearchInput" placeholder="Search by ID, subject, submitter, or order number..." autocomplete="off">
+                                <button class="clear-search-btn hidden" id="subSearchClear" aria-label="Clear search">✕</button>
+                            </div>
+                            
+                            <div class="filter-dropdown-group">
+                                <div class="filter-dropdown-wrapper">
+                                    <label for="subStatusFilter">Status</label>
+                                    <select id="subStatusFilter">
+                                        <option value="ALL">All Statuses</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Approved">Approved</option>
+                                        <option value="Completed">Completed</option>
+                                        <option value="In Progress">In Progress</option>
+                                        <option value="Follow-up Required">Follow-up Required</option>
+                                    </select>
+                                </div>
+                                <div class="filter-dropdown-wrapper">
+                                    <label for="subCategoryFilter">Category</label>
+                                    <select id="subCategoryFilter">
+                                        <option value="ALL">All Categories</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Table Info / Selected Count -->
+                        <div class="table-meta-info">
+                            <span class="records-count" id="submissionsCountText">Showing 0 records</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Submission Table Container -->
+                    <div class="table-container shadow-sm">
+                        <table class="data-table" id="submissionsTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Subject</th>
+                                    <th>Submitted By</th>
+                                    <th>Category</th>
+                                    <th>Ref Number</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="submissionsTableBody">
+                                <tr>
+                                    <td colspan="8" class="table-loading-row">
+                                        <span class="spinner"></span> Loading Submissions Data...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Table Pagination -->
+                    <div class="pagination-container">
+                        <span class="pagination-info" id="subPaginationInfo">Page 1 of 1</span>
+                        <div class="pagination-btns">
+                            <button class="pagination-btn" id="subPrevBtn" disabled>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="15 18 9 12 15 6"></polyline>
+                                </svg>
+                                <span>Previous</span>
+                            </button>
+                            <button class="pagination-btn" id="subNextBtn" disabled>
+                                <span>Next</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- VIEW 3: OFFICE ORDERS REGISTER -->
+                <section class="tab-view" id="orders-view">
+                    <div class="table-controls-wrapper">
+                        <!-- Search & Primary Filters -->
+                        <div class="search-filters-bar">
+                            <div class="search-input-wrapper">
+                                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input type="text" id="orderSearchInput" placeholder="Search by Order No, subject, related ID, or desc..." autocomplete="off">
+                                <button class="clear-search-btn hidden" id="orderSearchClear" aria-label="Clear search">✕</button>
+                            </div>
+                            
+                            <div class="filter-dropdown-group">
+                                <div class="filter-dropdown-wrapper">
+                                    <label for="orderDateSort">Sort Date</label>
+                                    <select id="orderDateSort">
+                                        <option value="NEWEST">Newest First</option>
+                                        <option value="OLDEST">Oldest First</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Table Info / Selected Count -->
+                        <div class="table-meta-info">
+                            <span class="records-count" id="ordersCountText">Showing 0 records</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Office Order Table Container -->
+                    <div class="table-container shadow-sm">
+                        <table class="data-table" id="ordersTable">
+                            <thead>
+                                <tr>
+                                    <th>Order No</th>
+                                    <th>Date Issued</th>
+                                    <th>Subject</th>
+                                    <th>Description</th>
+                                    <th>Linked Submission ID</th>
+                                    <th>File Attachment</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTableBody">
+                                <tr>
+                                    <td colspan="7" class="table-loading-row">
+                                        <span class="spinner"></span> Loading Office Orders Data...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Table Pagination -->
+                    <div class="pagination-container">
+                        <span class="pagination-info" id="orderPaginationInfo">Page 1 of 1</span>
+                        <div class="pagination-btns">
+                            <button class="pagination-btn" id="orderPrevBtn" disabled>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="15 18 9 12 15 6"></polyline>
+                                </svg>
+                                <span>Previous</span>
+                            </button>
+                            <button class="pagination-btn" id="orderNextBtn" disabled>
+                                <span>Next</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- VIEW 4: DOCUMENT TRACKER -->
+                <section class="tab-view" id="tracker-view">
+                    <div class="tracker-welcome-card">
+                        <div class="tracker-header">
+                            <div class="tracker-icon-pulse">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="2" x2="12" y2="6"></line>
+                                    <line x1="12" y1="18" x2="12" y2="22"></line>
+                                    <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+                                    <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+                                    <line x1="2" y1="12" x2="6" y2="12"></line>
+                                    <line x1="18" y1="12" x2="22" y2="12"></line>
+                                    <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+                                    <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+                                </svg>
+                            </div>
+                            <h2>Unified Document Tracker</h2>
+                            <p>Enter a **Submission ID** (e.g., `KSC/SUB/2026/001`) or **Office Order No.** to display the real-time tracking timeline and cross-linked records.</p>
+                        </div>
+                        
+                        <div class="tracker-search-box">
+                            <div class="search-input-wrapper lg-search">
+                                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input type="text" id="trackerQueryInput" placeholder="Enter Submission ID or Office Order No..." autocomplete="off">
+                                <button class="action-btn primary-btn" id="trackerSubmitBtn">Track Now</button>
+                            </div>
+                            
+                            <!-- Search Suggestions -->
+                            <div class="tracker-suggestions" id="trackerSuggestions">
+                                <span>Quick search examples:</span>
+                                <div class="suggestion-pills" id="suggestionPillsContainer">
+                                    <!-- Populated in JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dynamic Tracker Visual Timeline (Hidden initially) -->
+                    <div class="tracker-timeline-results hidden" id="trackerResults">
+                        <div class="results-header">
+                            <div class="doc-badge-meta">
+                                <span class="doc-type-pill" id="trackResultType">SUBMISSION</span>
+                                <h3 id="trackResultMainId">KSC/SUB/2026/001</h3>
+                            </div>
+                            <span class="status-pill status-pending" id="trackResultStatus">Pending</span>
+                        </div>
+                        
+                        <div class="results-layout-grid">
+                            
+                            <!-- Left: Detailed Metadata Card -->
+                            <div class="dashboard-card metadata-detail-card">
+                                <div class="card-header">
+                                    <h3>Document Parameters</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="meta-details-list" id="trackResultMetadata">
+                                        <!-- Loaded dynamically -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Right: Visual Relationship Timeline -->
+                            <div class="dashboard-card visual-timeline-card">
+                                <div class="card-header">
+                                    <h3>Operational Timeline</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="timeline" id="trackTimeline">
+                                        <!-- Timeline steps rendered dynamically in JS -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </section>
+                
+            </div>
+        </main>
+    </div>
+    
+    <!-- DETAIL DISPLAY MODAL (GLASSMORPHISM POPUP) -->
+    <div class="modal-overlay hidden" id="detailsModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-title-wrapper">
+                    <span class="modal-category-badge" id="modalCategory">-</span>
+                    <h3 id="modalTitle">Document Details</h3>
+                    <small id="modalSubTitle">ID: -</small>
+                </div>
+                <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">✕</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="modal-details-grid" id="modalDetailsGrid">
+                    <!-- Dynamically populated key-value detail list -->
+                </div>
+                
+                <!-- Linked Items inside Modal (Relationship View) -->
+                <div class="modal-link-section hidden" id="modalLinkSection">
+                    <h4 class="modal-section-title">Linked Office Orders</h4>
+                    <div class="linked-orders-list" id="modalLinkedOrders">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="action-btn outline-btn" id="modalCopyIdBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span>Copy Document ID</span>
+                </button>
+                <a href="#" target="_blank" class="action-btn primary-btn hidden" id="modalViewDocBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        <polyline points="15 3 21 3 21 9"></polyline>
+                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                    <span>View Original Document</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
