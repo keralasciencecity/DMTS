@@ -979,19 +979,11 @@ function renderOrdersGrid() {
         }
         tr.appendChild(subLinkTd);
         
-        // File Attachment link (Google Drive files check)
+        // File Attachment link (Local file or web URL)
         const fileTd = createDOMNode("td");
-        if (ord.file) {
-            const isUrl = ord.file.startsWith("http");
-            const fileLink = createDOMNode("a", ["doc-link-btn"], '', isUrl ? { href: ord.file, target: "_blank" } : { href: "#" });
+        if (ord.file && ord.file.trim() !== "") {
+            const fileLink = createDOMNode("a", ["doc-link-btn"], '', { href: ord.file, target: "_blank" });
             fileLink.innerHTML = `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg> Doc`;
-            
-            if (!isUrl) {
-                fileLink.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    alert(`Attachment Name: ${ord.file}\n(Original document link not saved in sheet).`);
-                });
-            }
             fileTd.appendChild(fileLink);
         } else {
             fileTd.textContent = "-";
@@ -1349,7 +1341,7 @@ function showSubmissionDetailsModal(sub) {
     });
     
     // Setup original file link
-    if (sub.document && sub.document.startsWith("http")) {
+    if (sub.document && sub.document.trim() !== "") {
         viewBtn.classList.remove("hidden");
         viewBtn.setAttribute("href", sub.document);
     } else {
@@ -1436,7 +1428,7 @@ function showOrderDetailsModal(ord) {
             .catch(err => console.error("Could not copy:", err));
     });
     
-    if (ord.file && ord.file.startsWith("http")) {
+    if (ord.file && ord.file.trim() !== "") {
         viewBtn.classList.remove("hidden");
         viewBtn.setAttribute("href", ord.file);
     } else {
