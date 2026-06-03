@@ -61,6 +61,11 @@
     --glass-border: rgba(0, 0, 0, 0.04);
 }
 
+/* Global Utilities */
+.hidden {
+    display: none !important;
+}
+
 /* Base Global Setup */
 * {
     margin: 0;
