@@ -145,6 +145,27 @@ function escapeHTML(str) {
         .replace(/'/g, '&#39;');
 }
 
+// Resolves file names to Google Drive document links
+function resolveFileLink(file) {
+    if (!file) return "";
+    const clean = file.trim();
+    if (clean.startsWith("http")) return clean;
+    
+    // Map text filenames (which are exported display texts of hyperlink-wrapped cells) to their actual Google Drive URLs
+    const mapping = {
+        "Request_for_Extension_of_Gallery_Trainees_Service_signed - Sujith.pdf": "https://drive.google.com/open?id=1tFjaAmHap3Ktt-kETlKZ1dW7ny8CZfYW",
+        "Training order_0001 - Sujith.pdf": "https://drive.google.com/open?id=1xdqGgwv2BOtGZv89-m9KG7yNtS1ijJqk",
+        "Planetarium_Laser_Projector_Tender_Specifications.pdf": "https://drive.google.com/open?id=1BgNOyue_jaCkYx0C2yGv9yHLKwcLPTDQ",
+        "Renovation_Blueprint_SDG_Phase1.pdf": "https://drive.google.com/open?id=1s0TyqL9pT8N1v5n2JkM6ud6z4-QTVWnb",
+        "Security_Contract_Renewal_Terms_Draft.pdf": "https://drive.google.com/open?id=1td9ZdgnGu0-LfOR-uZZXtBsXjVIaouDe",
+        "ISP_Broadband_Dedicated_Line_MoU.pdf": "https://drive.google.com/open?id=1eNtBcxyyzLKaEmCWs-gJ8d9qtI_QY-e5",
+        "Sanction_Order_Planetarium_Laser_Projectors.pdf": "https://drive.google.com/open?id=1BgNOyue_jaCkYx0C2yGv9yHLKwcLPTDQ",
+        "Work_Order_Fiber_MoU_Signed.pdf": "https://drive.google.com/open?id=1eNtBcxyyzLKaEmCWs-gJ8d9qtI_QY-e5"
+    };
+    
+    return mapping[clean] || clean;
+}
+
 // Robust, self-contained CSV Parser (Handles Quotes, Commas, and Multi-line values)
 function parseCSV(text) {
     if (!text || text.trim() === '') return [];
@@ -982,7 +1003,8 @@ function renderOrdersGrid() {
         // File Attachment link (Local file or web URL)
         const fileTd = createDOMNode("td");
         if (ord.file && ord.file.trim() !== "") {
-            const fileLink = createDOMNode("a", ["doc-link-btn"], '', { href: ord.file, target: "_blank" });
+            const resolvedUrl = resolveFileLink(ord.file);
+            const fileLink = createDOMNode("a", ["doc-link-btn"], '', { href: resolvedUrl, target: "_blank" });
             fileLink.innerHTML = `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg> Doc`;
             fileTd.appendChild(fileLink);
         } else {
@@ -1343,7 +1365,8 @@ function showSubmissionDetailsModal(sub) {
     // Setup original file link
     if (sub.document && sub.document.trim() !== "") {
         viewBtn.classList.remove("hidden");
-        viewBtn.setAttribute("href", sub.document);
+        const resolvedUrl = resolveFileLink(sub.document);
+        viewBtn.setAttribute("href", resolvedUrl);
     } else {
         viewBtn.classList.add("hidden");
     }
@@ -1430,7 +1453,8 @@ function showOrderDetailsModal(ord) {
     
     if (ord.file && ord.file.trim() !== "") {
         viewBtn.classList.remove("hidden");
-        viewBtn.setAttribute("href", ord.file);
+        const resolvedUrl = resolveFileLink(ord.file);
+        viewBtn.setAttribute("href", resolvedUrl);
     } else {
         viewBtn.classList.add("hidden");
     }
