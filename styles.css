@@ -416,6 +416,19 @@ h1, h2, h3, h4, h5, h6 {
     border-color: var(--text-secondary);
 }
 
+.purple-btn {
+    background-color: #8b5cf6;
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+}
+
+.purple-btn:hover {
+    background-color: #7c3aed;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(139, 92, 246, 0.25);
+}
+
 /* Error Banner */
 .error-banner {
     background-color: rgba(239, 68, 68, 0.12);
@@ -573,6 +586,155 @@ h1, h2, h3, h4, h5, h6 {
 .total-orders .stat-icon-wrapper {
     background-color: rgba(139, 92, 246, 0.12);
     color: #8b5cf6;
+}
+
+/* Quick Document Actions Grid styling */
+.quick-actions-section {
+    margin-bottom: 32px;
+}
+
+.quick-actions-section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.quick-action-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+}
+
+.quick-action-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--accent-color);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.quick-action-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-hover);
+    box-shadow: var(--hover-shadow);
+}
+
+.quick-action-card:hover::before {
+    opacity: 1;
+}
+
+.quick-action-card.submissions-card::before {
+    background: var(--accent-color);
+}
+
+.quick-action-card.orders-card::before {
+    background: #8b5cf6;
+}
+
+.quick-action-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.quick-action-card:hover .quick-action-icon-wrapper {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.submissions-card .quick-action-icon-wrapper {
+    background-color: rgba(20, 194, 127, 0.1);
+    color: var(--accent-color);
+}
+
+.orders-card .quick-action-icon-wrapper {
+    background-color: rgba(139, 92, 246, 0.1);
+    color: #8b5cf6;
+}
+
+.quick-action-details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-grow: 1;
+}
+
+.quick-action-details h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.quick-action-details p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.quick-action-btn-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 8px;
+    transition: color 0.2s ease;
+}
+
+.submissions-card .quick-action-btn-text {
+    color: var(--accent-color);
+}
+
+.submissions-card:hover .quick-action-btn-text {
+    color: var(--accent-hover);
+}
+
+.orders-card .quick-action-btn-text {
+    color: #8b5cf6;
+}
+
+.orders-card:hover .quick-action-btn-text {
+    color: #7c3aed;
+}
+
+.quick-action-btn-text svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.2s ease;
+}
+
+.quick-action-card:hover .quick-action-btn-text svg {
+    transform: translateX(4px);
 }
 
 /* Dashboard Core Grid (Charts & Lists) */
